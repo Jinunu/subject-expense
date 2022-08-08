@@ -9,10 +9,11 @@
         </encoder>
     </appender>
     <logger name="org.springframework.jdbc" level="DEBUG" />
-    <logger name="com.jsp.demo.dao">
+    <logger name="com.example.subject.dao">
         <level value="debug" />
     </logger>
-    <root level="info">
+    <root>
+        <level>off</level>
         <appender-ref ref="stdout" />
     </root>
 

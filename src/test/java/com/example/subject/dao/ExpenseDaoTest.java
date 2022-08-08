@@ -1,10 +1,17 @@
 package com.example.subject.dao;
 
-import com.example.subject.dto.ExpenseDto;
+import com.example.subject.domain.Expense;
+import com.example.subject.domain.UsageType;
+import com.example.subject.dto.ExpenseDetail;
+import com.example.subject.dto.ExpenseFormDto;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDate;
+
+import static com.example.subject.domain.UsageType.*;
 
 @Slf4j
 @SpringBootTest
@@ -16,10 +23,29 @@ public class ExpenseDaoTest {
     @Test
     void save() throws Exception{
         //given
-        ExpenseDto expenseDto = new ExpenseDto();
-        expenseDto.setExpense(3000);
+//        ExpenseFormDto expenseFormDto = new ExpenseFormDto();
+//        expenseFormDto.setExpense(3000);
+        Expense expense = new Expense();
+        expense.setExpense(3000);
+        expense.setUseDate(LocalDate.now().minusDays(1));
+        expense.setUsageType(EDUCATIONAL_EXPENSES);
+//        expenseFormDto.setUsageType(MEALS_NIGHT);
         //when
-
+        expenseMapper.save(expense);
         //then
     }
+
+    @Test
+    public void getExpenseDetail() throws Exception {
+        //given
+        Long expenseId = 1L;
+
+        //when
+        ExpenseDetail expenseDetail = expenseMapper.getExpenseDetail(expenseId);
+        log.info(expenseDetail.toString());
+
+        //then
+
+    }
+
 }

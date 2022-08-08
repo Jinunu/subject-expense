@@ -4,9 +4,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.subject.dao.ExpenseMapper">
+    <resultMap id="expenseDetail" type="com.example.subject.dto.ExpenseDetail">
+        <result property="expenseId" column="expense_id"/>
+        <result property="expense" column="expense"/>
+        <result property="useDate" column="use_date"/>
+        <result property="usageType" column="usage_type" typeHandler="com.example.subject.infra.mybatis.CodeEnumTypeHandler"/>
+        <result property="approvalExpense" column="approval_expense"/>
+        <result property="processingDate" column="processing_date"/>
+        <result property="processingState" column="processing_State" typeHandler="com.example.subject.infra.mybatis.CodeEnumTypeHandler"/>
+        <result property="message" column="message"/>
+    </resultMap>
+
+
     <insert id="save" useGeneratedKeys="true" keyProperty="expenseId" parameterType="Expense">
         INSERT INTO expense(use_date, expense, reg_date, usage_type, processing_state)
-        VALUES (#{useDate}, #{expense}, curdate(), #{usageType}, #{processingState})
+        VALUES (#{useDate}, #{expense}, curdate(), #{usageType.code}, 0)
     </insert>
 
+    <select id="getExpenseDetail" resultMap="expenseDetail">
+        SELECT expense_id, expense, processing_state, approval_expense, message, usage_type, use_date, processing_date
+        FROM expense
+        WHERE expense.expense_id = #{expenseId}
+    </select>
 </mapper>
