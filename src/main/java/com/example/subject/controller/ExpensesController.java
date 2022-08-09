@@ -37,10 +37,11 @@ public class ExpensesController {
     }
 
     @PostMapping("/save")
+    @ResponseBody
     public String saveExpense(@ModelAttribute ExpenseFormDto expenseFormDto) throws IOException {
         expenseService.registerExpense(expenseFormDto);
-
-        return "redirect:"+BASIC_PATH;
+        log.info("=================");
+        return "success";
     }
 
 

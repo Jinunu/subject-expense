@@ -13,8 +13,8 @@
     <div class="control-box">
         <span class="title">경비 등록/수정</span>
         <div class="button" style="display: inline-block">
-            <button id="save" onclick="getFormData()">저장</button>
-            <button>닫기</button>
+            <button id="save" >저장</button>
+            <button id="close">닫기</button>
         </div>
 
         <form id="saveExpense" action="/expense/save" method="POST" enctype="multipart/form-data">
@@ -69,16 +69,38 @@
     });
     let getFormData = function (){
         let formData = new FormData;
-        let usageType = parseInt($('#usageType').val());
+        let usageType = $('#usageType').val();
         let expense = $('#expense').val();
         let useDate = $('#useDate').val();
+
         formData.append('usageType', usageType);
         formData.append('expense', expense);
         formData.append('useDate', useDate)
+        formData.append('receiptImage', $('input[type=file]')[0].files[0])
         return formData;
     }
     $('#save').click(function (){
-       $('#saveExpense').submit();
+        let formData = getFormData();
+        $.ajax({
+                type: 'POST',
+                url: '/expense/save',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data){
+                    if (data == "success"){
+                        window.close();
+                    }
+
+                }
+            });
+
+       // window.close();
+    })
+
+    $('#close').click(function (){
+
+        window.close();
     })
 
 </script>

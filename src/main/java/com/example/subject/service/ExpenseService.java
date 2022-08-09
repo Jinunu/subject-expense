@@ -18,11 +18,10 @@ public class ExpenseService {
 
     public void registerExpense(ExpenseFormDto expenseFormDto) throws IOException {
         Expense expense = expenseFormDtoToExpense(expenseFormDto);
+
+        //TODO
         expenseMapper.save(expense);
-        String fileName = fileService.uploadFile(expenseFormDto.getReceiptImage());
-
-        log.info(fileName, fileName);
-
+        fileService.uploadFile(expenseFormDto.getReceiptImage());
     }
 
     public Expense expenseFormDtoToExpense(ExpenseFormDto expenseFormDto) {

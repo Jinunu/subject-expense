@@ -5,8 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FileUpload {
+public class File {
     private Long fileId;
+    private Long expenseId;
     private String originalFileName;
-    private String filePath;
+    private String fileName;
 }

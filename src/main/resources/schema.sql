@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS `expense`;
+DROP TABLE IF EXISTS `file`;
 
 CREATE TABLE `expense` (
                            `expense_id`	BIGINT	NOT NULL AUTO_INCREMENT,
@@ -13,7 +14,26 @@ CREATE TABLE `expense` (
 
 );
 
+CREATE TABLE `file` (
+                        `file_id`	BIGINT	NOT NULL,
+                        `expense_id`	BIGINT	NOT NULL,
+                        `orginal_name`	VARCHAR(255)	NULL,
+                        `name`	VARCHAR(255)	NULL
+);
+
 ALTER TABLE `expense` ADD CONSTRAINT `PK_EXPENSE` PRIMARY KEY (
                                                                `expense_id`
     );
+
+ALTER TABLE `file` ADD CONSTRAINT `PK_FILE` PRIMARY KEY (
+                                                         `file_id`,
+                                                         `expense_id`
+    );
+
+ALTER TABLE `file` ADD CONSTRAINT `FK_expense_TO_file_1` FOREIGN KEY (
+                                                                      `expense_id`
+    )
+    REFERENCES `expense` (
+                          `expense_id`
+        );
 
