@@ -5,8 +5,8 @@ CREATE TABLE `expense` (
                            `use_date`	Date	NULL,
                            `expense`	int	NULL,
                            `reg_date`	Date	NULL,
-                           `usage_type`	int	NULL,
-                           `processing_state`	int	DEFAULT 0,
+                           `usage_type`	VARCHAR (255)	NULL,
+                           `processing_state`	VARCHAR (255)	DEFAULT '0',
                            `processing_date`	Date	NULL,
                            `approval_expense`	int	NULL,
                            `message`	VARCHAR	NULL

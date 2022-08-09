@@ -21,29 +21,29 @@ public class CodeEnumTypeHandler<E extends Enum<E>> implements TypeHandler<CodeE
     @Override
     public void setParameter(PreparedStatement preparedStatement, int i, CodeEnum codeEnum, JdbcType jdbcType) throws
             SQLException {
-        preparedStatement.setInt(i, codeEnum.getCode());
+        preparedStatement.setString(i, codeEnum.getCode());
     }
 
     @Override
     public CodeEnum getResult(ResultSet resultSet, String s) throws SQLException {
-        return getCodeEnum(resultSet.getInt(s));
+        return  getCodeEnum(resultSet.getString(s));
     }
 
     @Override
     public CodeEnum getResult(ResultSet resultSet, int i) throws SQLException {
-        return getCodeEnum(resultSet.getInt(i));
+        return getCodeEnum(resultSet.getString(i));
     }
 
     @Override
     public CodeEnum getResult(CallableStatement callableStatement, int i) throws SQLException {
-        return getCodeEnum(callableStatement.getInt(i));
+        return getCodeEnum(callableStatement.getString(i));
     }
 
-    private CodeEnum getCodeEnum(int code) {
+    private CodeEnum getCodeEnum(String code) {
         try {
             CodeEnum[] enumConstants = (CodeEnum[])type.getEnumConstants();
             return Arrays.stream(enumConstants)
-                    .filter(codeEnum -> code == codeEnum.getCode())
+                    .filter(codeEnum -> codeEnum.getCode().equals(code))
                     .findFirst()
                     .orElse(null);
         } catch (Exception e) {

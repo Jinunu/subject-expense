@@ -18,7 +18,7 @@
 
     <insert id="save" useGeneratedKeys="true" keyProperty="expenseId" parameterType="Expense">
         INSERT INTO expense(use_date, expense, reg_date, usage_type, processing_state)
-        VALUES (#{useDate}, #{expense}, curdate(), #{usageType.code}, 0)
+        VALUES (#{useDate}, #{expense}, curdate(), #{usageType.code}, '0')
     </insert>
 
     <select id="getExpenseDetail" resultMap="expenseDetail">

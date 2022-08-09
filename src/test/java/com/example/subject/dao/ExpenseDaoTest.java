@@ -1,6 +1,7 @@
 package com.example.subject.dao;
 
 import com.example.subject.domain.Expense;
+import com.example.subject.domain.ProcessingState;
 import com.example.subject.domain.UsageType;
 import com.example.subject.dto.ExpenseDetail;
 import com.example.subject.dto.ExpenseFormDto;
@@ -25,6 +26,10 @@ public class ExpenseDaoTest {
         //given
 //        ExpenseFormDto expenseFormDto = new ExpenseFormDto();
 //        expenseFormDto.setExpense(3000);
+
+        System.out.println(            EDUCATIONAL_EXPENSES.getCode()
+        );
+        ENTERTAINMENT.getCode();
         Expense expense = new Expense();
         expense.setExpense(3000);
         expense.setUseDate(LocalDate.now().minusDays(1));
@@ -32,6 +37,8 @@ public class ExpenseDaoTest {
 //        expenseFormDto.setUsageType(MEALS_NIGHT);
         //when
         expenseMapper.save(expense);
+        ExpenseDetail expenseDetail = expenseMapper.getExpenseDetail(1L);
+        log.info(expenseDetail.toString());
         //then
     }
 
@@ -46,6 +53,16 @@ public class ExpenseDaoTest {
 
         //then
 
+    }
+
+    @Test
+    void asd() throws Exception{
+        //given
+
+        //when
+
+
+        //then
     }
 
 }
