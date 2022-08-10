@@ -26,4 +26,12 @@
         FROM expense
         WHERE expense.expense_id = #{expenseId}
     </select>
+    <select id="getCurrentExpenseId" resultType="java.lang.Long">
+        SELECT SCOPE_IDENTITY()
+    </select>
+    <select id="searchByExpense" resultType="com.example.subject.dto.ExpenseSearchResult">
+        SELECT
+    </select>
+
+
 </mapper>

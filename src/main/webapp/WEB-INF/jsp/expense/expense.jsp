@@ -8,20 +8,35 @@
 </head>
 
 <body>
-<%--    <header>--%>
-<%--        <div class=""></div>--%>
 
-<%--    </header>--%>
-<%--    <section >--%>
-<%--        <div class="inner">--%>
+    <section >
+        <form>
+            <div class="inner" for="regDate">
+                <label>등록연월</label>
+                <input id="regDate" type="month" value="">
+                <label>사용내역</label>
+                <select id="usageType" name="usageType">
+                    <option selected value="">전체</option>
+                    <option value="MEALS_NIGHT" >식대(야근)</option>
+                    <option value=TAXI_NIGHT>택시비(야근)</option>
+                    <option value="TAXI_DINING_TOGETHER">택시비(회식)</option>
+                    <option value="OFFICE_EQUIPMENT">사무용품 구매</option>
+                    <option value="EDUCATIONAL_EXPENSES">교육비</option>
+                    <option value="ENTERTAINMENT">접대비</option>
+                </select>
 
-<%--        </div>--%>
-<%--    </section>--%>
+                <label>처리상태</label>
+                <select id="processingState" name="processingState">
+                    <option selected value="">전체</option>
+                    <option value="REGISTER" >접수</option>
+                    <option value=APPROVAL>승인</option>
+                    <option value="DONE">지급완료</option>
+                    <option value="REJECT">반려</option>
+                </select>
+            </div>
+        </form>
+    </section>
 
-<%--    <div>--%>
-
-
-<%--    </div>--%>
 
     <section >
         <div class="inner">

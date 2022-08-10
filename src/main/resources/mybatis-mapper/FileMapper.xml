@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.subject.dao.FileMapper">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="fileId" parameterType="File">
+        INSERT INTO file(expense_id, original_name, file_name)
+        VALUES (#{expenseId}, #{originalName}, #{fileName})
+    </insert>
+    <select id="findByExpenseId" resultType="com.example.subject.domain.File">
+        SELECT file_id, expense_id, file_name, original_name
+        FROM file
+        WHERE expense_id = #{expenseId}
+    </select>
+
+</mapper>

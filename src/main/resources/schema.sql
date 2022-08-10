@@ -15,10 +15,10 @@ CREATE TABLE `expense` (
 );
 
 CREATE TABLE `file` (
-                        `file_id`	BIGINT	NOT NULL,
+                        `file_id`	BIGINT	NOT NULL AUTO_INCREMENT,
                         `expense_id`	BIGINT	NOT NULL,
-                        `orginal_name`	VARCHAR(255)	NULL,
-                        `name`	VARCHAR(255)	NULL
+                        `original_name`	VARCHAR(255)	NULL,
+                        `file_name`	VARCHAR(255)	NULL
 );
 
 ALTER TABLE `expense` ADD CONSTRAINT `PK_EXPENSE` PRIMARY KEY (

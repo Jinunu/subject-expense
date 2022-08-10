@@ -1,5 +1,6 @@
 package com.example.subject;
 
+import com.example.subject.dao.FileMapper;
 import com.example.subject.service.FileService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +11,12 @@ public class FIleServiceTest {
 
     @Autowired
     FileService fileService;
+    @Autowired
+    FileMapper fileMapper;
 
     @Test
-    void filePath() throws Exception{
-        //given
-        System.out.println(System.getProperty("user.dir"));
-        
-        //when
+    void uploadImage() throws Exception{
 
-        //then
+
     }
 }

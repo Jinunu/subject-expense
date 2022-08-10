@@ -5,23 +5,36 @@ import com.example.subject.domain.Expense;
 import com.example.subject.dto.ExpenseFormDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ExpenseService {
-    private final ExpenseMapper expenseMapper;
-    FileService fileService = new FileService();
 
-    public void registerExpense(ExpenseFormDto expenseFormDto) throws IOException {
+
+    private final ExpenseMapper expenseMapper;
+    private final FileService fileService;
+
+    @Transactional
+    public void registerExpense(ExpenseFormDto expenseFormDto) {
         Expense expense = expenseFormDtoToExpense(expenseFormDto);
 
         //TODO
-        expenseMapper.save(expense);
-        fileService.uploadFile(expenseFormDto.getReceiptImage());
+        try {
+            expenseMapper.save(expense);
+            Long currentExpenseId = expenseMapper.getCurrentExpenseId();
+            fileService.uploadFile(expenseFormDto.getReceiptImage(), currentExpenseId);
+        }catch (Exception e){
+            log.error(e.getMessage());
+            throw new RuntimeException("파일 업로드 실패");
+        }
+
+
     }
 
     public Expense expenseFormDtoToExpense(ExpenseFormDto expenseFormDto) {

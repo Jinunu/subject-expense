@@ -8,3 +8,5 @@ INSERT INTO expense(expense_id, use_date, expense, reg_date, usage_type, process
 VALUES (4, '2022-08-04', 3000, '2022-08-05', '3', NULL, '3', 3000, NULL);
 INSERT INTO expense(expense_id, use_date, expense, reg_date, usage_type, processing_date, processing_state, approval_expense, message)
 VALUES (5, '2022-08-05', 3000, '2022-08-06', '4', NULL, '4', 3000, NULL);
+
+INSERT INTO file(expense_id, file_name, original_name) values (1, '파일이름', '원래이름');
