@@ -15,7 +15,21 @@
         <result property="message" column="message"/>
     </resultMap>
 
+<!--     private Long expenseId;
+    private LocalDate useDate;
+    private UsageType usageType;
+    private int expense;
+    private int approvalExpense;
+    private ProcessingState processingState;
+    private LocalDate regDate;-->
+
     <resultMap id="expenseSearchResult" type="com.example.subject.dto.ExpenseSearchResult">
+        <result property="useDate" column="use_date"></result>
+        <result property="expense" column="expense"></result>
+        <result property="approvalExpense" column="approval_expense"></result>
+        <result property="processingState" column="processing_state"  typeHandler="com.example.subject.infra.mybatis.CodeEnumTypeHandler"></result>
+        <result property="usageType" column="usage_type" typeHandler="com.example.subject.infra.mybatis.CodeEnumTypeHandler"/>
+        <result property="regDate" column="reg_date"></result>
 
     </resultMap>
 
@@ -33,15 +47,19 @@
     <select id="getCurrentExpenseId" resultType="java.lang.Long">
         SELECT SCOPE_IDENTITY()
     </select>
-    <select id="searchByExpense" parameterType="com.example.subject.dto.SearchCondition" resultType="com.example.subject.dto.ExpenseSearchResult">
-        SELECT expense_id, use_date, expense, approval_expense, processing_state, reg_date
+
+    <select id="searchByExpense" parameterType="com.example.subject.dto.SearchCondition" resultMap="expenseSearchResult" >
+        SELECT expense_id, use_date, expense, approval_expense, processing_state, usage_type, reg_date
         FROM expense
+        WHERE reg_date BETWEEN #{startRegDate} AND #{endRegDate}
         <choose>
-            <when test="rgeDateYearMonth != null"  >
-                WHERE reg_date BETWEEN #{startRegDate} AND #{endRegDate}
+            <when test="usageType != null">
+                AND usage_type = #{usageType.code}
+            </when>
+            <when test="processingState != null">
+                AND processing_state = #{processingState.code}
             </when>
         </choose>
-
     </select>
 
 

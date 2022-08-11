@@ -1,14 +1,17 @@
 package com.example.subject.dto;
 
-import com.example.subject.domain.ProcessingState;
-import com.example.subject.domain.UsageType;
-import lombok.Data;
+import com.example.subject.domain.code.ProcessingState;
+import com.example.subject.domain.code.UsageType;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SearchCondition {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

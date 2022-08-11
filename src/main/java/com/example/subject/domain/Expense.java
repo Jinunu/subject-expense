@@ -1,5 +1,7 @@
 package com.example.subject.domain;
 
+import com.example.subject.domain.code.ProcessingState;
+import com.example.subject.domain.code.UsageType;
 import lombok.Getter;
 import lombok.Setter;
 

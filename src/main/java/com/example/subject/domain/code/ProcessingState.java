@@ -1,8 +1,9 @@
-package com.example.subject.domain;
+package com.example.subject.domain.code;
 
+import com.example.subject.domain.CodeEnum;
 import lombok.Getter;
 
-public enum ProcessingState implements CodeEnum{
+public enum ProcessingState implements CodeEnum {
 
     REGISTER("0", "접수"),
     APPROVAL("1", "승인"),
