@@ -65,9 +65,17 @@ public class ExpenseDaoTest {
     void searchWithSearchCondition() throws Exception{
         //given
         YearMonth yearMonth = YearMonth.of(2022, 8);
-        log.info( yearMonth.toString());
-        SearchCondition searchCondition = new SearchCondition();
 
+        SearchCondition searchCondition = new SearchCondition();
+        searchCondition.setRgeDateYearMonth(yearMonth);
+        LocalDate startRegDate = searchCondition.getStartRegDate();
+        LocalDate endRegDate = searchCondition.getEndRegDate();
+        searchCondition.setStartRegDate(startRegDate);
+        searchCondition.setEndRegDate(endRegDate);
+        expenseMapper.searchByExpense(searchCondition);
+//
+//        System.out.println(startRegDate.toString());
+//        System.out.println(endRegDate.toString());
         //when
 
         //then

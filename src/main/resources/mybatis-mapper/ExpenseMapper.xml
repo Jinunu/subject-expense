@@ -15,6 +15,10 @@
         <result property="message" column="message"/>
     </resultMap>
 
+    <resultMap id="expenseSearchResult" type="com.example.subject.dto.ExpenseSearchResult">
+
+    </resultMap>
+
 
     <insert id="save" useGeneratedKeys="true" keyProperty="expenseId" parameterType="Expense">
         INSERT INTO expense(use_date, expense, reg_date, usage_type, processing_state)
@@ -29,8 +33,15 @@
     <select id="getCurrentExpenseId" resultType="java.lang.Long">
         SELECT SCOPE_IDENTITY()
     </select>
-    <select id="searchByExpense" resultType="com.example.subject.dto.ExpenseSearchResult">
-        SELECT
+    <select id="searchByExpense" parameterType="com.example.subject.dto.SearchCondition" resultType="com.example.subject.dto.ExpenseSearchResult">
+        SELECT expense_id, use_date, expense, approval_expense, processing_state, reg_date
+        FROM expense
+        <choose>
+            <when test="rgeDateYearMonth != null"  >
+                WHERE reg_date BETWEEN #{startRegDate} AND #{endRegDate}
+            </when>
+        </choose>
+
     </select>
 
 
