@@ -1,8 +1,9 @@
 package com.example.subject.domain.code;
 
 import com.example.subject.domain.CodeEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
-
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ProcessingState implements CodeEnum {
 
     REGISTER("0", "접수"),

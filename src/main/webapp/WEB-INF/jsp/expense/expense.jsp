@@ -10,10 +10,10 @@
 <body>
 
     <section >
-        <form>
+        <form id="searchForm">
             <div class="inner" for="regDate">
                 <label>등록연월</label>
-                <input id="regDate" type="month" value="">
+                <input id="rgeDateYearMonth" type="month" value="">
                 <label>사용내역</label>
                 <select id="usageType" name="usageType">
                     <option selected value="">전체</option>
@@ -33,7 +33,10 @@
                     <option value="DONE">지급완료</option>
                     <option value="REJECT">반려</option>
                 </select>
+                <button id="reset" type="button">초기화</button>
+                <button id="search"  type="button" >검색</button>
             </div>
+
         </form>
     </section>
 
@@ -51,7 +54,7 @@
             </div>
             </div>
             <table>
-                <tr>
+                <thead>
                     <th>순번</th>
                     <th>사용일</th>
                     <th>사용내역</th>
@@ -59,58 +62,16 @@
                     <th>승인금액</th>
                     <th>처리상태</th>
                     <th>등록일</th>
-                </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                    <td>Germany</td>
-                </tr>
+                </thead>
+                <tbody id="tbody">
+
+                </tbody>
                 <tfoot>
                 <td>합계</td>
                 <td>-</td>
                 <td>-</td>
-                <td>-</td>
-                <td>-</td>
+                <td id="sumExpense">-</td>
+                <td id="sumApprovalExpense">-</td>
                 <td>-</td>
                 <td>-</td>
                 </tfoot>
@@ -121,6 +82,74 @@
 
 
 <script src="js/expense.js" ></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-serialize-object/2.5.0/jquery.serialize-object.min.js" integrity="sha512-Gn0tSSjkIGAkaZQWjx3Ctl/0dVJuTmjW/f9QyB302kFjU4uTNP4HtA32U2qXs/TRlEsK5CoEqMEMs7LnzLOBsA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function (){
+
+
+
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth() + 1;
+        const yearMonth = currentYear+"-"+(("00"+currentMonth.toString()).slice(-2));
+        $('#rgeDateYearMonth').val(yearMonth);
+
+
+        $('#search').on('click', function () {
+            let searchFormData = getSearchFormData();
+            $.ajax({
+                type: 'patch',
+                url: '/expense/search',
+                data: searchFormData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    tableList(data)
+                }
+            });
+        });
+
+
+    })// document
+
+
+        function getSearchFormData() {
+            let formData = new FormData();
+            formData.append('rgeDateYearMonth', $('#rgeDateYearMonth').val());
+            formData.append('usageType', $('#usageType').val());
+            formData.append('processingState', $('#processingState').val());
+            return formData;
+        }
+    let clearTable = function (){
+        $('tbody tr').remove();
+        $('tfoot td').html('-');
+    }
+    let tableList = function (results) {
+
+        let sumExpense = 0;
+        let sumApprovalExpense = 0;
+        clearTable();
+        for (let result of results) {
+            sumExpense += result.expense
+            sumApprovalExpense += result.approvalExpense
+            $('#tbody').append(
+               ` <tr>
+                    <td>\${result.expenseId}</td>
+                    <td>\${result.useDate}</td>
+                    <td>\${result.usageType.title}</td>
+                    <td>\${result.expense}</td>
+                    <td>\${result.approvalExpense}</td>
+                    <td>\${result.processingState.title}</td>
+                    <td>\${result.regDate}</td>
+                </tr>`
+            )
+            $('#sumExpense').html(sumExpense);
+            $('#sumApprovalExpense').html(sumApprovalExpense);
+
+        }
+
+    };
+</script>
 </body>
 </html>
 

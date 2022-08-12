@@ -2,6 +2,7 @@ package com.example.subject.dao;
 
 import com.example.subject.domain.Expense;
 import com.example.subject.domain.code.ProcessingState;
+import com.example.subject.domain.code.UsageType;
 import com.example.subject.dto.ExpenseDetail;
 import com.example.subject.dto.ExpenseSearchResult;
 import com.example.subject.dto.SearchCondition;
@@ -17,7 +18,9 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.subject.domain.code.ProcessingState.*;
 import static com.example.subject.domain.code.UsageType.*;
+
 
 @Slf4j
 @SpringBootTest
@@ -105,7 +108,7 @@ public class ExpenseDaoTest {
     @Test
     public void searchConditionProcessingStateIsNotNull() throws Exception {
         //given
-        SearchCondition searchCondition = SearchCondition.builder().rgeDateYearMonth(YearMonth.of(2022, 8)).processingState(ProcessingState.REGISTER).build();
+        SearchCondition searchCondition = SearchCondition.builder().rgeDateYearMonth(YearMonth.of(2022, 8)).processingState(REGISTER).build();
         //when
         List<ExpenseSearchResult> expenseSearchResults = expenseMapper.searchByExpense(searchCondition);
 

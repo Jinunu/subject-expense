@@ -1,8 +1,12 @@
 package com.example.subject.dto;
 
+
 import com.example.subject.domain.code.ProcessingState;
 import com.example.subject.domain.code.UsageType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;

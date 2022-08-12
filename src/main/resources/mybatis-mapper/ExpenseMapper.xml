@@ -52,14 +52,12 @@
         SELECT expense_id, use_date, expense, approval_expense, processing_state, usage_type, reg_date
         FROM expense
         WHERE reg_date BETWEEN #{startRegDate} AND #{endRegDate}
-        <choose>
-            <when test="usageType != null">
+            <if test="usageType != null">
                 AND usage_type = #{usageType.code}
-            </when>
-            <when test="processingState != null">
+            </if>
+            <if test="processingState != null">
                 AND processing_state = #{processingState.code}
-            </when>
-        </choose>
+            </if>
     </select>
 
 
