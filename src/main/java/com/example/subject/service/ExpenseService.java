@@ -2,6 +2,7 @@ package com.example.subject.service;
 
 import com.example.subject.dao.ExpenseMapper;
 import com.example.subject.domain.Expense;
+import com.example.subject.dto.ExpenseDetail;
 import com.example.subject.dto.ExpenseFormDto;
 import com.example.subject.dto.ExpenseSearchResult;
 import com.example.subject.dto.SearchCondition;
@@ -52,5 +53,15 @@ public class ExpenseService {
 
     public List<ExpenseSearchResult> searchExpenseList(SearchCondition searchCondition) {
         return expenseMapper.searchByExpense(searchCondition);
+    }
+
+    public ExpenseDetail getExpenseDetail(Long expenseId) {
+        return expenseMapper.getExpenseDetail(expenseId);
+    }
+
+    @Transactional
+    public void editExpesne(ExpenseFormDto expenseFormDto) throws IOException {
+        expenseMapper.update(expenseFormDto);
+        fileService.editReceiptImage(expenseFormDto.getReceiptImage(), expenseFormDto.getFileId());
     }
 }

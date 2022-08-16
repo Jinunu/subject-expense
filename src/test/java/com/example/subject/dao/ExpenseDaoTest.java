@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,8 @@ public class ExpenseDaoTest {
     public void getExpenseDetail() throws Exception {
         //given
         Long expenseId = 1L;
-
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println("now = " + now);
         //when
         ExpenseDetail expenseDetail = expenseMapper.getExpenseDetail(expenseId);
         log.info(expenseDetail.toString());

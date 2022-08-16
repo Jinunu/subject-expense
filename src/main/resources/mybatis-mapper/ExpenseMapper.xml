@@ -15,13 +15,27 @@
         <result property="message" column="message"/>
     </resultMap>
 
-<!--     private Long expenseId;
-    private LocalDate useDate;
-    private UsageType usageType;
-    private int expense;
-    private int approvalExpense;
-    private ProcessingState processingState;
-    private LocalDate regDate;-->
+<!--    @Data-->
+<!--    public class ExpenseFormDto {-->
+<!--    private int expense;-->
+<!--    private UsageType usageType;-->
+<!--    //    private int processing_state;-->
+<!--    @DateTimeFormat(pattern = "yyyy-MM-dd")-->
+<!--    private LocalDate useDate;-->
+<!--    //    private LocalDate regDate;-->
+<!--    private MultipartFile receiptImage;-->
+
+<!--    }-->
+<!--    <parameterMap id="expenseFormDto" type="com.example.subject.dto.ExpenseFormDto">-->
+<!--        <parameter property=""-->
+<!--    </parameterMap>-->
+<!--    <resultMap id="expenseFormDto" type="com.example.subject.dto.ExpenseFormDto">-->
+<!--        <result property="expenseId" column="expense_id" ></result>-->
+<!--        <result property="expense" column="expense"></result>-->
+<!--        <result property="useDate" column="use_date"></result>-->
+<!--        <result property="usageType" column="usage_type" typeHandler="com.example.subject.infra.mybatis.CodeEnumTypeHandler"></result>-->
+<!--    </resultMap>-->
+
 
     <resultMap id="expenseSearchResult" type="com.example.subject.dto.ExpenseSearchResult">
         <result property="useDate" column="use_date"></result>
@@ -39,10 +53,30 @@
         VALUES (#{useDate}, #{expense}, curdate(), #{usageType.code}, '0')
     </insert>
 
+
+
+    <update id="update" >
+        UPDATE expense
+            <set>
+            <if test="usageType != null">
+                usage_type = #{usageType.code},
+            </if>
+            <if test="useDate != null">
+                use_date = #{useDate},
+            </if>
+            <if test="expense != null">
+                expense = #{expense}
+            </if>
+            </set>
+            WHERE expense_id = #{expenseId}
+    </update>
+
     <select id="getExpenseDetail" resultMap="expenseDetail">
-        SELECT expense_id, expense, processing_state, approval_expense, message, usage_type, use_date, processing_date
-        FROM expense
-        WHERE expense.expense_id = #{expenseId}
+        SELECT e.expense_id, e.usage_type, e.expense, e.use_date, e.processing_state, e.processing_date, e.approval_expense, e.message,
+               f.original_name, f.file_name, f.file_id
+        FROM expense e
+        JOIN file f on e.expense_id = f.expense_id
+        WHERE e.expense_id = #{expenseId}
     </select>
     <select id="getCurrentExpenseId" resultType="java.lang.Long">
         SELECT SCOPE_IDENTITY()

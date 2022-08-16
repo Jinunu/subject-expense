@@ -25,20 +25,50 @@ public class FileService {
 
     @Transactional
     public void uploadFile(MultipartFile multipartFile, Long expenseId) throws IOException {
-        String newFilePath = createNewFilePath(multipartFile);
-        FileCopyUtils.copy(multipartFile.getBytes(), new java.io.File(newFilePath));
+        String newFilePath = uploadDir(multipartFile);
+        String fileName = getSubStringFileName(newFilePath);
         File saveFile = File.builder().
                 expenseId(expenseId).
                 originalName(multipartFile.getOriginalFilename()).
-                fileName(newFilePath).
+                fileName(fileName).
                 build();
-        //TODO upload sql 만들것
         fileMapper.save(saveFile);
+    }
+
+    private String uploadDir(MultipartFile multipartFile) throws IOException {
+        String newFilePath = createNewFilePath(multipartFile);
+        FileCopyUtils.copy(multipartFile.getBytes(), new java.io.File(newFilePath));
+        return newFilePath;
+    }
+
+    private String getSubStringFileName(String newFilePath) {
+        int index = newFilePath.lastIndexOf("/");
+        String fileName = newFilePath.substring(index + 1);
+        return fileName;
     }
 
     private String createNewFilePath(MultipartFile multipartFile) {
         String newFilePath = UPLOAD_DIR+"/"+UUID.randomUUID().toString()+ multipartFile.getOriginalFilename();
         return newFilePath;
+    }
+
+    public void editReceiptImage(MultipartFile multipartFile, Long fileId) throws IOException {
+        //TODO 기존의 파일과 다를경우만 업데이트
+
+        try {
+            String newFilePath = uploadDir(multipartFile);
+            String fileName = getSubStringFileName(newFilePath);
+            File editFile = File.builder()
+                    .fileName(fileName)
+                    .fileId(fileId)
+                    .originalName(multipartFile.getOriginalFilename())
+                    .build();
+            fileMapper.editImage(editFile);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+
     }
 
 }

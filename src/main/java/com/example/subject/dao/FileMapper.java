@@ -8,4 +8,6 @@ public interface FileMapper {
     void save(File file);
 
     File findByExpenseId(Long expenseId);
+
+    void editImage(File file);
 }

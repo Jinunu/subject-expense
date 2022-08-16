@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,7 +17,7 @@ public class Expense {
     private ProcessingState processingState;
     private LocalDate useDate;
     private LocalDate regDate;
-    private LocalDate processingDate;
+    private LocalDateTime processingDate;
     private int approvalExpense;
     private String message;
     //이미지 추가할것

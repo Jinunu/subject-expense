@@ -1,13 +1,16 @@
 package com.example.subject.controller;
 
+import com.example.subject.dto.ExpenseDetail;
 import com.example.subject.dto.ExpenseFormDto;
 import com.example.subject.dto.ExpenseSearchResult;
 import com.example.subject.dto.SearchCondition;
 import com.example.subject.service.ExpenseService;
+import com.example.subject.service.FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -53,5 +56,19 @@ public class ExpensesController {
         ResponseEntity<List<ExpenseSearchResult>> success = ResponseEntity.ok(expenseSearchResults);
         return success;
 
+    }
+
+    @GetMapping("/detail/{expenseId}")
+    public String getExpenseDetail(@PathVariable Long expenseId, Model model) {
+        ExpenseDetail detail = expenseService.getExpenseDetail(expenseId);
+        model.addAttribute("detail", detail);
+        return BASIC_PATH + "/expenseDetailPopup";
+    }
+
+    @PutMapping()
+    @ResponseBody
+    public String editExpense(@ModelAttribute ExpenseFormDto expenseFormDto) throws IOException {
+        expenseService.editExpesne(expenseFormDto);
+        return "success";
     }
 }

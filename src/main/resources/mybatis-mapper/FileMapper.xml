@@ -9,6 +9,19 @@
         INSERT INTO file(expense_id, original_name, file_name)
         VALUES (#{expenseId}, #{originalName}, #{fileName})
     </insert>
+    <update id="editImage">
+        UPDATE file
+        <set>
+            <if test="fileName != null">
+                file_name = #{fileName},
+            </if>
+            <if test="originalName !=null" >
+                original_name = #{originalName}
+            </if>
+        </set>
+        WHERE file_id = #{fileId}
+
+    </update>
     <select id="findByExpenseId" resultType="com.example.subject.domain.File">
         SELECT file_id, expense_id, file_name, original_name
         FROM file

@@ -29,6 +29,10 @@ td, th {
     padding: 8px;
 }
 
+table tbody tr {
+    cursor: pointer;
+}
+
 section {
     width: 100%;
     background-color: #fff;

@@ -81,6 +81,7 @@
     </section>
 
 
+
 <script src="js/expense.js" ></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-serialize-object/2.5.0/jquery.serialize-object.min.js" integrity="sha512-Gn0tSSjkIGAkaZQWjx3Ctl/0dVJuTmjW/f9QyB302kFjU4uTNP4HtA32U2qXs/TRlEsK5CoEqMEMs7LnzLOBsA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -108,6 +109,12 @@
                 }
             });
         });
+        // tr click 이벤트
+        $('table tbody tr').click(function(){
+
+            alert(this)
+            // openPopup(this.url, "경비 상세 내역")
+        });
 
 
     })// document
@@ -133,7 +140,8 @@
             sumExpense += result.expense
             sumApprovalExpense += result.approvalExpense
             $('#tbody').append(
-               ` <tr>
+               `
+                 <tr onclick="openPopup('expense/detail/\${result.expenseId}', '경비 상세 수정/삭제')">
                     <td>\${result.expenseId}</td>
                     <td>\${result.useDate}</td>
                     <td>\${result.usageType.title}</td>
@@ -141,7 +149,8 @@
                     <td>\${result.approvalExpense}</td>
                     <td>\${result.processingState.title}</td>
                     <td>\${result.regDate}</td>
-                </tr>`
+                </tr>
+                `
             )
             $('#sumExpense').html(sumExpense);
             $('#sumApprovalExpense').html(sumApprovalExpense);

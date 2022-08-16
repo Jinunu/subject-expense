@@ -1,5 +1,5 @@
 INSERT INTO expense(expense_id, use_date, expense, reg_date, usage_type, processing_date, processing_state, approval_expense, message)
-VALUES (1, '2022-08-01', 3000, '2022-08-02', '0', NULL, '0', 3000, NULL);
+VALUES (1, '2022-08-01', 3000, '2022-08-02', '0', now(), '0', 3000, NULL);
 INSERT INTO expense(expense_id, use_date, expense, reg_date, usage_type, processing_date, processing_state, approval_expense, message)
 VALUES (2, '2022-08-02', 3000, '2022-08-03', '1', NULL, '1', 3000, NULL);
 INSERT INTO expense(expense_id, use_date, expense, reg_date, usage_type, processing_date, processing_state, approval_expense, message)
