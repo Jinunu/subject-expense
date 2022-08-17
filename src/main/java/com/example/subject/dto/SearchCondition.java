@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -23,7 +24,9 @@ public class SearchCondition {
     private YearMonth rgeDateYearMonth;
     private LocalDate startRegDate;
     private LocalDate endRegDate;
+    @Nullable
     private UsageType usageType;
+    @Nullable
     private ProcessingState processingState;
 
    public LocalDate getStartRegDate(){

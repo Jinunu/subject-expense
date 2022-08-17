@@ -39,7 +39,8 @@
 
         </form>
     </section>
-
+    <form id="excelDownload" style="display: none" action="/expense/export/excel" method="POST">
+    </form>
 
     <section >
         <div class="inner">
@@ -49,7 +50,7 @@
 
             </div>
             <div class="table-button-container">
-                <button>엑셀 다운로드</button>
+                <button id="excelExport">엑셀 다운로드</button>
                 <button id="save" onclick="openPopup('expense/expensePopup', '경비 등록/수정')">등록</button>
             </div>
             </div>
@@ -109,11 +110,20 @@
                 }
             });
         });
-        // tr click 이벤트
-        $('table tbody tr').click(function(){
 
-            alert(this)
-            // openPopup(this.url, "경비 상세 내역")
+        $('#excelExport').on('click', function (e) {
+            e.preventDefault();
+            let rgeDateYearMonth = $('#rgeDateYearMonth').val();
+            let usageType = $('#usageType').val();
+            let processingState = $('#processingState').val();
+          postForm("/expense/export/excel", {rgeDateYearMonth: rgeDateYearMonth,
+          usageType: usageType, processingState: processingState}), "post"
+
+
+        });
+
+
+        $('table tbody tr').click(function(){
         });
 
 
@@ -131,6 +141,11 @@
         $('tbody tr').remove();
         $('tfoot td').html('-');
     }
+
+
+
+
+
     let tableList = function (results) {
 
         let sumExpense = 0;
