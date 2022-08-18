@@ -1,17 +1,13 @@
 package com.example.subject.controller;
 
-import com.example.subject.domain.code.ProcessingState;
-import com.example.subject.domain.code.UsageType;
 import com.example.subject.dto.ExpenseDetail;
 import com.example.subject.dto.ExpenseFormDto;
 import com.example.subject.dto.ExpenseSearchResult;
 import com.example.subject.dto.SearchCondition;
 import com.example.subject.service.ExpenseService;
-import com.example.subject.service.FileService;
 import com.example.subject.util.ExpenseExcelExporter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Month;
-import java.time.YearMonth;
 import java.util.Date;
 import java.util.List;
 
@@ -79,7 +72,7 @@ public class ExpensesController {
     @PutMapping()
     @ResponseBody
     public String editExpense(@ModelAttribute ExpenseFormDto expenseFormDto) throws IOException {
-        expenseService.editExpesne(expenseFormDto);
+        expenseService.editExpense(expenseFormDto);
         return "success";
     }
 

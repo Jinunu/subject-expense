@@ -60,8 +60,10 @@ public class ExpenseService {
     }
 
     @Transactional
-    public void editExpesne(ExpenseFormDto expenseFormDto) throws IOException {
+    public void editExpense(ExpenseFormDto expenseFormDto) throws IOException {
         expenseMapper.update(expenseFormDto);
-        fileService.editReceiptImage(expenseFormDto.getReceiptImage(), expenseFormDto.getFileId());
+        if (expenseFormDto.getReceiptImage() != null) {
+            fileService.editReceiptImage(expenseFormDto.getReceiptImage(), expenseFormDto.getFileId());
+        }
     }
 }
