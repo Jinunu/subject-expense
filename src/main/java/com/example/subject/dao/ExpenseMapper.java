@@ -18,4 +18,5 @@ public interface ExpenseMapper {
 
     void update(ExpenseFormDto expenseFormDto);
 
+    void deleteExpense(Long expenseId);
 }

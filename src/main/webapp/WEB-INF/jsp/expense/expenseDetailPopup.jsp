@@ -107,25 +107,6 @@
     $(document).ready(function(){
 
 
-        <%--let detail = {--%>
-        <%--    expenseId: ${detail.expenseId},--%>
-        <%--    usageType: {--%>
-        <%--    code :${detail.usageType.code},--%>
-        <%--        title : ${detail.usageType.title}--%>
-        <%--},--%>
-        <%--    expense: ${detail.expense},--%>
-        <%--    useDate: '${detail.useDate}',--%>
-        <%--    originalName: '${detail.originalName}',--%>
-        <%--    fileName: '${detail.fileName}',--%>
-        <%--    processingState: {--%>
-        <%--    code : ${detail.processingState.code},--%>
-        <%--        title : ${detail.processingState.title}--%>
-        <%--},--%>
-        <%--    processingDate: '${detail.processingDate}',--%>
-        <%--    approvalExpense: ${detail.approvalExpense},--%>
-        <%--    message: '${detail.message}'--%>
-        <%--};--%>
-
         let initExpenseDetail = function () {
             $('#usageType').val('${detail.usageType}');
             $('#expense').val(${detail.expense});
@@ -140,7 +121,28 @@
             $('#edit').remove();
             $('#delete').remove();
         }
+        $("#delete").on('click', function () {
+            if (confirm("삭제 하시겠습니까?")) {
+                const expenseId = $('#expenseId').val()
 
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/expense/'+expenseId,
+                    success: function (data) {
+                        if (data == 'success') {
+                            // 부모창의 테이블 row를 삭제 하고 싶다...
+                            opener.deleteExpense(expenseId);
+                            window.close();
+                            // parentWindow.window.parentFn();
+                        }
+                    }
+                })
+
+            }else {
+                alert("N")
+            }
+
+        });
 
     });
 
@@ -191,7 +193,6 @@
                 }
             });
 
-       // window.close();
     })
 
     $('#close').click(function (){

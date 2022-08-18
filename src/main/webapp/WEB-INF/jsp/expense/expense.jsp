@@ -71,8 +71,8 @@
                 <td>합계</td>
                 <td>-</td>
                 <td>-</td>
-                <td id="sumExpense">-</td>
-                <td id="sumApprovalExpense">-</td>
+                <td id="sumExpense" name="sumExpense">-</td>
+                <td id="sumApprovalExpense" name="sumApprovalExpense">-</td>
                 <td>-</td>
                 <td>-</td>
                 </tfoot>
@@ -137,6 +137,8 @@
         });
 
 
+
+
     })// document
 
 
@@ -150,6 +152,7 @@
     let clearTable = function (){
         $('tbody tr').remove();
         $('tfoot td').html('-');
+        $('tfoot td').first().html('합계');
     }
 
 
@@ -168,11 +171,11 @@
             $('#tbody').append(
                `
                  <tr onclick="openPopup('expense/detail/\${result.expenseId}', '경비 상세 수정/삭제')">
-                    <td>\${result.expenseId}</td>
+                    <td id="rowNo\${result.expenseId}">\${result.expenseId}</td>
                     <td>\${result.useDate}</td>
                     <td>\${result.usageType.title}</td>
-                    <td>\${result.expense}</td>
-                    <td>\${result.approvalExpense}</td>
+                    <td name="expense">\${result.expense}</td>
+                    <td name="approvalExpense">\${result.approvalExpense}</td>
                     <td>\${result.processingState.title}</td>
                     <td>\${result.regDate}</td>
                 </tr>
@@ -183,6 +186,24 @@
 
         }
 
+    };
+
+    window.deleteExpense = function (expenseId) {
+        const rowNo = 'rowNo'+expenseId
+        afterDeleteExpenseSum(rowNo)
+
+        $('#'+rowNo).parent().remove();
+    };
+
+    let afterDeleteExpenseSum = function (rowNo) {
+        let expense = $('#'+rowNo).parent().find('td[name="expense"]').html();
+        let approvalExpense = $('#'+rowNo).parent().find('td[name="approvalExpense"]').html();
+        let sumApprovalExpense = $('#sumApprovalExpense').html();
+        let sumExpense = $('#sumExpense').html();
+        sumApprovalExpense = eval(sumApprovalExpense-approvalExpense);
+        sumExpense = eval(sumExpense-expense);
+        $('#sumApprovalExpense').html(sumApprovalExpense);
+        $('#sumExpense').html(sumExpense);
     };
 </script>
 </body>

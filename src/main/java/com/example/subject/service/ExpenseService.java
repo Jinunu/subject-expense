@@ -66,4 +66,9 @@ public class ExpenseService {
             fileService.editReceiptImage(expenseFormDto.getReceiptImage(), expenseFormDto.getFileId());
         }
     }
+
+    @Transactional
+    public void deleteExpense(Long expenseId) {
+        expenseMapper.deleteExpense(expenseId);
+    }
 }

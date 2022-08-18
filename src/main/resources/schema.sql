@@ -35,5 +35,5 @@ ALTER TABLE `file` ADD CONSTRAINT `FK_expense_TO_file_1` FOREIGN KEY (
     )
     REFERENCES `expense` (
                           `expense_id`
-        );
+        )ON DELETE CASCADE;
 

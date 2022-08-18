@@ -7,6 +7,7 @@ import com.example.subject.dto.ExpenseDetail;
 import com.example.subject.dto.ExpenseSearchResult;
 import com.example.subject.dto.SearchCondition;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import static com.example.subject.domain.code.ProcessingState.*;
 import static com.example.subject.domain.code.UsageType.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @Slf4j
@@ -118,6 +120,18 @@ public class ExpenseDaoTest {
         System.out.println("expenseSearchResults.toString() = " + expenseSearchResults.toString());
 
     }
+    @Test
+    void deleteExpense() throws Exception{
+        //given
+        Long expenseId = 1L;
+
+        //when
+        expenseMapper.deleteExpense(expenseId);
+        //then
+        ExpenseDetail expenseDetail = expenseMapper.getExpenseDetail(expenseId);
+        assertThat(expenseDetail).isEqualTo(null);
+    }
+
 
 
 

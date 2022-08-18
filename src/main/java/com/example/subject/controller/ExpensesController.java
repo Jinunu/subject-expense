@@ -83,7 +83,7 @@ public class ExpensesController {
         log.info(searchCondition.toString());
         response.setContentType("application/octet-stream");
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String currentDateTime  = dateFormat.format(new Date());
+        String currentDateTime = dateFormat.format(new Date());
 
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=expense_" + currentDateTime + ".xlsx";
@@ -92,5 +92,12 @@ public class ExpensesController {
         ExpenseExcelExporter excelExporter = new ExpenseExcelExporter(expenseSearchResults);
 
         excelExporter.export(response);
+    }
+
+    @DeleteMapping("/{expenseId}")
+    @ResponseBody
+    public String deleteExpense(@PathVariable Long expenseId) {
+        expenseService.deleteExpense(expenseId);
+        return "success";
     }
 }

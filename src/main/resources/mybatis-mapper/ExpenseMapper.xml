@@ -94,5 +94,10 @@
             </if>
     </select>
 
+    <delete id="deleteExpense" parameterType="long">
+        DELETE
+        FROM expense
+        WHERE expense_id = #{expenseId}
+    </delete>
 
 </mapper>
