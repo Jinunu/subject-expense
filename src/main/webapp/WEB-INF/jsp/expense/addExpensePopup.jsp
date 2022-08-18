@@ -23,7 +23,7 @@
                 <div style="display: inline-block">
                     <select id="usageType" name="usageType">
 
-                        <option selected value="2">선택</option>
+                        <option selected value="">선택</option>
                         <option value="MEALS_NIGHT" >식대(야근)</option>
                         <option value=TAXI_NIGHT>택시비(야근)</option>
                         <option value="TAXI_DINING_TOGETHER">택시비(회식)</option>
@@ -62,6 +62,7 @@
         </form>
     </div>
 </div>
+<script src="../js/expensePopup.js" ></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
@@ -80,8 +81,11 @@
         return formData;
     }
     $('#save').click(function (){
-        let formData = getFormData();
-        $.ajax({
+        // validate  사용내역, 사용일, 금액, 이미지 null 체크
+        if (saveFormValidator()) {
+            let formData = getFormData();
+            $.ajax({
+
                 type: 'POST',
                 url: '/expense/save',
                 data: formData,
@@ -95,8 +99,10 @@
                 }
             });
 
-       // window.close();
-    })
+        }
+
+
+    }) // save end
 
     $('#close').click(function (){
 

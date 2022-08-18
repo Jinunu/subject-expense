@@ -11,9 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -46,7 +48,7 @@ public class ExpensesController {
 
     @PostMapping("/save")
     @ResponseBody
-    public String saveExpense(@ModelAttribute ExpenseFormDto expenseFormDto) throws IOException {
+    public String saveExpense(@Valid @ModelAttribute ExpenseFormDto expenseFormDto) throws IOException {
         expenseService.registerExpense(expenseFormDto);
         log.info("=================");
         return "success";
