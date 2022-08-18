@@ -33,7 +33,7 @@
                     <option value="DONE">지급완료</option>
                     <option value="REJECT">반려</option>
                 </select>
-                <button id="reset" type="button">초기화</button>
+                <button id="init" type="button">초기화</button>
                 <button id="search"  type="button" >검색</button>
             </div>
 
@@ -90,11 +90,16 @@
     $(document).ready(function (){
 
 
+        function initSearchCondition() {
+            const currentYear = new Date().getFullYear();
+            const currentMonth = new Date().getMonth() + 1;
+            const yearMonth = currentYear + "-" + (("00" + currentMonth.toString()).slice(-2));
+            $('#rgeDateYearMonth').val(yearMonth);
+            $('#usageType').val("");
+            $('#processingState').val("");
+        }
 
-        const currentYear = new Date().getFullYear();
-        const currentMonth = new Date().getMonth() + 1;
-        const yearMonth = currentYear+"-"+(("00"+currentMonth.toString()).slice(-2));
-        $('#rgeDateYearMonth').val(yearMonth);
+        initSearchCondition();
 
 
         $('#search').on('click', function () {
@@ -126,6 +131,11 @@
         $('table tbody tr').click(function(){
         });
 
+        $('#init').on('click', function (){
+            initSearchCondition();
+            clearTable();
+        });
+
 
     })// document
 
@@ -141,6 +151,7 @@
         $('tbody tr').remove();
         $('tfoot td').html('-');
     }
+
 
 
 
