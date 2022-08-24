@@ -106,7 +106,7 @@
             let searchFormData = getSearchFormData();
             $.ajax({
                 type: 'patch',
-                url: '/expense/search',
+                url: '/api/expense/search',
                 data: searchFormData,
                 processData: false,
                 contentType: false,

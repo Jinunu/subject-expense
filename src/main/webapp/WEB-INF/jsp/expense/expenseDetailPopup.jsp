@@ -127,7 +127,7 @@
 
                 $.ajax({
                     type: 'DELETE',
-                    url: '/expense/'+expenseId,
+                    url: '/api/expense/'+expenseId,
                     success: function (data) {
                         if (data == 'success') {
                             // 부모창의 테이블 row를 삭제 하고 싶다...
@@ -181,7 +181,7 @@
         let formData = getFormData();
         $.ajax({
                 type: 'PUT',
-                url: '/expense',
+                url: '/api/expense',
                 data: formData,
                 processData: false,
                 contentType: false,

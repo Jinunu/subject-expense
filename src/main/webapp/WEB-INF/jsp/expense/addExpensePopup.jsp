@@ -87,7 +87,7 @@
             $.ajax({
 
                 type: 'POST',
-                url: '/expense/save',
+                url: '/api/expense/save',
                 data: formData,
                 processData: false,
                 contentType: false,

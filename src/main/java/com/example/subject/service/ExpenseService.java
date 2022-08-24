@@ -5,7 +5,10 @@ import com.example.subject.domain.Expense;
 import com.example.subject.dto.ExpenseDetail;
 import com.example.subject.dto.ExpenseFormDto;
 import com.example.subject.dto.ExpenseSearchResult;
+import com.example.subject.dto.ExpenseUpdateForm;
 import com.example.subject.dto.SearchCondition;
+import com.example.subject.error.CommonErrorCode;
+import com.example.subject.error.RestApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -36,7 +39,7 @@ public class ExpenseService {
             fileService.uploadFile(expenseFormDto.getReceiptImage(), currentExpenseId);
         }catch (Exception e){
             log.error(e.getMessage());
-            throw new RuntimeException("파일 업로드 실패");
+            throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
         }
 
 
@@ -60,10 +63,10 @@ public class ExpenseService {
     }
 
     @Transactional
-    public void editExpense(ExpenseFormDto expenseFormDto) throws IOException {
-        expenseMapper.update(expenseFormDto);
-        if (expenseFormDto.getReceiptImage() != null) {
-            fileService.editReceiptImage(expenseFormDto.getReceiptImage(), expenseFormDto.getFileId());
+    public void editExpense(ExpenseUpdateForm expenseUpdateForm) throws IOException {
+        expenseMapper.update(expenseUpdateForm);
+        if (expenseUpdateForm.getReceiptImage() != null) {
+            fileService.editReceiptImage(expenseUpdateForm.getReceiptImage(), expenseUpdateForm.getFileId());
         }
     }
 

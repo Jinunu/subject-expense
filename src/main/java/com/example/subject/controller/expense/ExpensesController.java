@@ -1,17 +1,18 @@
-package com.example.subject.controller;
+package com.example.subject.controller.expense;
 
-import com.example.subject.dto.ExpenseDetail;
-import com.example.subject.dto.ExpenseFormDto;
-import com.example.subject.dto.ExpenseSearchResult;
-import com.example.subject.dto.SearchCondition;
+import com.example.subject.dto.*;
 import com.example.subject.service.ExpenseService;
 import com.example.subject.util.ExpenseExcelExporter;
+import com.example.subject.util.validator.ExpenseFormValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +31,8 @@ public class ExpensesController {
     public static final String BASIC_PATH = "/expense";
     private final ExpenseService expenseService;
 
+
+
     @GetMapping("/")
     public String index() {
         log.info("index");
@@ -46,23 +49,9 @@ public class ExpensesController {
         return BASIC_PATH + "/addExpensePopup";
     }
 
-    @PostMapping("/save")
-    @ResponseBody
-    public String saveExpense(@Valid @ModelAttribute ExpenseFormDto expenseFormDto) throws IOException {
-        expenseService.registerExpense(expenseFormDto);
-        log.info("=================");
-        return "success";
-    }
 
-    @PatchMapping("/search")
-    @ResponseBody
-    public ResponseEntity<List<ExpenseSearchResult>> searchExpenseList(@ModelAttribute SearchCondition searchCondition) {
 
-        List<ExpenseSearchResult> expenseSearchResults = expenseService.searchExpenseList(searchCondition);
-        ResponseEntity<List<ExpenseSearchResult>> success = ResponseEntity.ok(expenseSearchResults);
-        return success;
 
-    }
 
     @GetMapping("/detail/{expenseId}")
     public String getExpenseDetail(@PathVariable Long expenseId, Model model) {
@@ -71,12 +60,7 @@ public class ExpensesController {
         return BASIC_PATH + "/expenseDetailPopup";
     }
 
-    @PutMapping()
-    @ResponseBody
-    public String editExpense(@ModelAttribute ExpenseFormDto expenseFormDto) throws IOException {
-        expenseService.editExpense(expenseFormDto);
-        return "success";
-    }
+
 
     @PostMapping("/export/excel")
     public void exportToExcel(@ModelAttribute SearchCondition searchCondition, HttpServletResponse response) throws IOException {
@@ -96,10 +80,5 @@ public class ExpensesController {
         excelExporter.export(response);
     }
 
-    @DeleteMapping("/{expenseId}")
-    @ResponseBody
-    public String deleteExpense(@PathVariable Long expenseId) {
-        expenseService.deleteExpense(expenseId);
-        return "success";
-    }
+
 }
