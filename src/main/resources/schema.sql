@@ -1,6 +1,13 @@
 DROP TABLE IF EXISTS `expense`;
 DROP TABLE IF EXISTS `file`;
 
+CREATE TABLE `member` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR (255) unique NOT NULL,
+    `password` VARCHAR (255) NOT NULL
+
+);
+
 CREATE TABLE `expense` (
                            `expense_id`	BIGINT	NOT NULL AUTO_INCREMENT,
                            `use_date`	Date	NULL,

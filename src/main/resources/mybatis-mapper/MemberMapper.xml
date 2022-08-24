@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.subject.dao.MemberMapper">
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Member">
+        INSERT INTO Member(username, password)
+        VALUES ( #{username}, #{password})
+    </insert>
+
+    <select id="findByUsername" parameterType="string"  resultType="com.example.subject.domain.Member">
+        SELECT *
+        FROM member
+        WHERE username = #{username}
+    </select>
+
+    <update id="updatePassword" parameterType="string">
+        UPDATE member
+        SET password = #{password}
+        WHERE username = #{username}
+    </update>
+
+
+</mapper>
