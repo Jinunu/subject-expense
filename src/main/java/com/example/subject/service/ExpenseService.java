@@ -2,17 +2,11 @@ package com.example.subject.service;
 
 import com.example.subject.dao.ExpenseMapper;
 import com.example.subject.domain.Expense;
-import com.example.subject.dto.ExpenseDetail;
-import com.example.subject.dto.ExpenseFormDto;
-import com.example.subject.dto.ExpenseSearchResult;
-import com.example.subject.dto.ExpenseUpdateForm;
-import com.example.subject.dto.SearchCondition;
+import com.example.subject.dto.*;
 import com.example.subject.error.CommonErrorCode;
 import com.example.subject.error.RestApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +26,6 @@ public class ExpenseService {
     public void registerExpense(ExpenseFormDto expenseFormDto) {
         Expense expense = expenseFormDtoToExpense(expenseFormDto);
 
-        //TODO
         try {
             expenseMapper.save(expense);
             Long currentExpenseId = expenseMapper.getCurrentExpenseId();
@@ -50,7 +43,6 @@ public class ExpenseService {
         expense.setExpense(expenseFormDto.getExpense());
         expense.setUsageType(expenseFormDto.getUsageType());
         expense.setUseDate(expenseFormDto.getUseDate());
-        //TODO image 처리
         return expense;
     }
 

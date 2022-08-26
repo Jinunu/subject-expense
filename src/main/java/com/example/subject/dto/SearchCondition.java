@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
@@ -21,6 +22,7 @@ public class SearchCondition {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     // 등록 연월로 검색
+    @NotNull
     private YearMonth rgeDateYearMonth;
     private LocalDate startRegDate;
     private LocalDate endRegDate;

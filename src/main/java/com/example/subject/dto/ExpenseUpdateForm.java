@@ -8,5 +8,6 @@ import javax.validation.constraints.NotNull;
 public class ExpenseUpdateForm extends ExpenseFormDto {
     @NotNull
     private Long expenseId;
+    @NotNull
     private Long fileId;
 }

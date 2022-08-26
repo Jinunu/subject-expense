@@ -4,9 +4,6 @@ import com.example.subject.dao.FileMapper;
 import com.example.subject.domain.File;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.juli.logging.LogFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
@@ -53,7 +50,6 @@ public class FileService {
     }
 
     public void editReceiptImage(MultipartFile multipartFile, Long fileId) throws IOException {
-        //TODO 기존의 파일과 다를경우만 업데이트
 
         try {
             String newFilePath = uploadDir(multipartFile);

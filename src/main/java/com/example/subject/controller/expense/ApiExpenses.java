@@ -4,14 +4,11 @@ import com.example.subject.dto.ExpenseFormDto;
 import com.example.subject.dto.ExpenseSearchResult;
 import com.example.subject.dto.ExpenseUpdateForm;
 import com.example.subject.dto.SearchCondition;
-import com.example.subject.error.CommonErrorCode;
-import com.example.subject.error.RestApiException;
 import com.example.subject.service.ExpenseService;
 import com.example.subject.util.validator.ExpenseFormValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -34,17 +31,14 @@ public class ApiExpenses {
     }
 
     @PostMapping("/save")
-    public String saveExpense(@Valid @ModelAttribute ExpenseFormDto expenseFormDto, BindingResult bindingResult) throws IOException {
-//        if (bindingResult.hasErrors()) {
-//            throw new MethodArgumentNotValidException()
-//        }
+    public ResponseEntity<?> saveExpense(@ModelAttribute @Valid ExpenseFormDto expenseFormDto) throws IOException, MethodArgumentNotValidException {
 
         expenseService.registerExpense(expenseFormDto);
-        return "success";
+        return ResponseEntity.ok("success");
     }
 
     @PatchMapping("/search")
-    public ResponseEntity<List<ExpenseSearchResult>> searchExpenseList(@ModelAttribute SearchCondition searchCondition) {
+    public ResponseEntity<List<ExpenseSearchResult>> searchExpenseList(@ModelAttribute @Valid SearchCondition searchCondition) {
 
         List<ExpenseSearchResult> expenseSearchResults = expenseService.searchExpenseList(searchCondition);
         ResponseEntity<List<ExpenseSearchResult>> success = ResponseEntity.ok(expenseSearchResults);
@@ -52,7 +46,7 @@ public class ApiExpenses {
 
     }
     @PutMapping()
-    public String editExpense(@ModelAttribute ExpenseUpdateForm expenseUpdateForm) throws IOException {
+    public String editExpense(@ModelAttribute @Valid ExpenseUpdateForm expenseUpdateForm) throws IOException {
         expenseService.editExpense(expenseUpdateForm);
         return "success";
     }

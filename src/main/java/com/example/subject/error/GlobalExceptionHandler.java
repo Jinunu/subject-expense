@@ -30,6 +30,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(errorCode, e.getMessage());
     }
 
+    public ResponseEntity<Object> handleBindException(BindException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        log.warn("handleBindException");
+        ErrorCode errorCode = CommonErrorCode.INVALID_PARAMETER;
+
+        return handleExceptionInternal(ex, errorCode);
+    }
+
     @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException e,

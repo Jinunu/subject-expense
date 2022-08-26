@@ -1,17 +1,18 @@
 package com.example.subject.util;
 
 import com.example.subject.dto.ExpenseSearchResult;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public class ExpenseExcelExporter {
@@ -43,7 +44,6 @@ public class ExpenseExcelExporter {
         createCell(row, 4, "승인금액", style);
         createCell(row, 5, "처리상태", style);
         createCell(row, 6, "등록일", style);
-        //TODO Date 처리 ?LocalDate
     }
 
     private void createCell(Row row, int columnCount, Object value, CellStyle style) {
